@@ -259,8 +259,10 @@ module Vanity
       # previously recorded as participating in this experiment.
       def ab_add_conversion(experiment, alternative, identity, count = 1, implicit = false)
         participant = VanityParticipant.retrieve(experiment, identity, false)
-        VanityParticipant.retrieve(experiment, identity, implicit, :converted => alternative)
-        VanityExperiment.retrieve(experiment).increment_conversion(alternative, count)
+        if participant.present? || implicit
+          VanityParticipant.retrieve(experiment, identity, implicit, :converted => alternative)
+          VanityExperiment.retrieve(experiment).increment_conversion(alternative, count)
+        end
       end
 
       # Returns the outcome of this experiment (if set), the index of a

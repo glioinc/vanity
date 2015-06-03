@@ -445,7 +445,7 @@ module Vanity
         connection.destroy_experiment @id
         super
       end
-      
+
       # clears all collected data for the experiment
       def reset
         connection.destroy_experiment @id
