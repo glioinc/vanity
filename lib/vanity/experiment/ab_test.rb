@@ -475,9 +475,11 @@ module Vanity
         identity ||= identity() rescue nil
 
         if identity
-          return if connection.ab_showing(@id, identity)
+          @playground.logger.info "vanity: id #{identity} should be tracked in experiment #{@id.to_s}"
+          @playground.logger.info "vanity: participant not found for experiment: #{@id.to_s}" and return if connection.ab_showing(@id, identity)
           index = alternative_for(identity)
           connection.ab_add_conversion @id, index, identity, count
+          @playground.logger.info "vanity: id #{identity} should have conversion for experiment #{@id.to_s}, and alternative #{index}"
           check_completion!
         end
       end
