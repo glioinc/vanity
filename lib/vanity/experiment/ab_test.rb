@@ -472,7 +472,9 @@ module Vanity
       def track!(metric_id, timestamp, count, *args)
         return unless active?
         identity = args.last[:identity] if args.last.is_a?(Hash) && args.last[:identity]
+        @playground.logger.info "vanity: identity ##{identity} before rescue in experiment #{@id.to_s}"
         identity ||= identity() rescue nil
+        @playground.logger.info "vanity: identity ##{identity} after rescue in experiment #{@id.to_s}"
 
         if identity
           @playground.logger.info "vanity: id #{identity} should be tracked in experiment #{@id.to_s}"
