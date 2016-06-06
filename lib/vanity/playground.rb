@@ -55,8 +55,6 @@ module Vanity
       @failover_on_datastore_error = false
       self.add_participant_path = DEFAULT_ADD_PARTICIPANT_PATH
       @collecting = !!@options[:collecting]
-      metrics
-      experiments
     end
 
     # Path to load experiment files from.
@@ -305,6 +303,8 @@ module Vanity
     #
     # @since 1.1.0
     def track!(id, count = 1)
+      metrics
+      experiments
       metric(id).track! count
     end
 
